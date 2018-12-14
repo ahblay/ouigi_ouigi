@@ -1,0 +1,36 @@
+.letters {
+    display: grid;
+    grid-template-columns: 33% 34% 33%;
+    grid-template-rows: 80px 50px 200px 50px 80px;
+}
+
+.upvote {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    justify-self: center;
+    align-self: center;
+}
+
+.letter {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+    font-size: 150px;
+    font-weight: bold;
+    justify-self: center;
+    align-self: center;
+}
+
+.downvote {
+    grid-column: 2 / 3;
+    grid-row: 4 / 5;
+    justify-self: center;
+    align-self: center;
+}
+
+.display {
+
+}
+
+.text {
+
+}
