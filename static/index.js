@@ -3,8 +3,8 @@ var alphabet = ["A", "B", "C", "D", "E", "F", "G",
                 "O", "P", "Q", "R", "S", "T", "U",
                 "V", "W", "X", "Y", "Z"];
 var selectedLetter = "a";
-var timer = null;
-//var interval = setInterval(getChosenLetter, 5000);
+var remainingTime;
+var intervalTime = 60000;
 
 $(getTime);
 
@@ -37,22 +37,42 @@ function cycleDown() {
 
 function submit() {
     $.post("/update_letter", {letter: selectedLetter})
+    $(this).off("click", submit);
+    $(this).addClass("disabled");
 }
 
 function getTime() {
     $.get("/get_time", function(time) {
         console.log(time);
-        let remainingTime = (60 - parseInt(time)) * 1000;
+        remainingTime = (60 - parseInt(time)) * 1000;
         setTimeout(function() {
-            setInterval(getChosenLetter, 5000);
+            getChosenLetter();
+            setInterval(getChosenLetter, intervalTime);
         }, remainingTime);
+        setTimer();
+        setInterval(setTimer, 1000);
     })
 }
 
 function getChosenLetter() {
     $.get("/get_chosen_letter", function(letter) {
         console.log(letter)
-        new_text = $(".text").text() + letter
-        $(".text").text(new_text)
+        new_text = $(".text").text() + letter;
+        $(".text").text(new_text);
+        $(".submit").on("click", submit);
+        $(".submit").removeClass("disabled");
     })
+}
+
+function setTimer() {
+    remainingTime = remainingTime - 1000;
+    let seconds = Math.floor(remainingTime / 1000);
+    let minutes = Math.floor(remainingTime / 60000);
+    let hours = Math.floor(remainingTime / 3600000);
+    let time = ("0" + minutes.toString()).slice(-2) + ":" +
+               ("0" + seconds.toString()).slice(-2);
+    $(".timer").text(time);
+    if (remainingTime <= 0) {
+        remainingTime = intervalTime;
+    }
 }

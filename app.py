@@ -14,7 +14,12 @@ mysql.init_app(app)
 conn = mysql.connect()
 cursor = conn.cursor()
 
-current_id = 13
+
+def get_last_row():
+    sql = "SELECT MAX(id) FROM letters"
+    cursor.execute(sql)
+    value = cursor.fetchone()[0]
+    return value
 
 
 def add_new_row():
@@ -22,7 +27,11 @@ def add_new_row():
     cursor.execute(sql)
     conn.commit()
     global current_id
-    current_id += 1
+    current_id = cursor.lastrowid
+    print(current_id)
+
+current_id = get_last_row()
+print(current_id)
 
 
 @app.route("/")
@@ -34,6 +43,8 @@ def index():
 def update_letter():
     letter = request.form["letter"]
     sql = "SELECT " + letter + " FROM letters WHERE id = %s"
+    print("TESTING THAT CURRENT ID EXISTS in update_letter")
+    print(current_id)
     cursor.execute(sql, current_id)
     value = cursor.fetchone()[0]
 
@@ -55,10 +66,12 @@ def get_time():
 def get_chosen_letter():
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     sql = "SELECT a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z FROM letters WHERE id = %s"
+    print("TESTING THAT CURRENT ID EXISTS in get_chosen_letter")
+    print(current_id)
     cursor.execute(sql, current_id)
     values = cursor.fetchone()
     print(values)
-    result = "a"
+    result = "."
     max = 0
     counter = 0
     for value in values:
