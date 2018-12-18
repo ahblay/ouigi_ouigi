@@ -8,6 +8,8 @@ var intervalTime = 60000;
 
 $(getTime);
 
+$(getCurrentString);
+
 $(".upvote").click(cycleUp);
 
 $(".downvote").click(cycleDown);
@@ -55,10 +57,12 @@ function getTime() {
 }
 
 function getChosenLetter() {
-    $.get("/get_chosen_letter", function(letter) {
-        console.log(letter)
-        new_text = $(".text").text() + letter;
-        $(".text").text(new_text);
+    $.get("/get_chosen_letter", function(letter_string) {
+        console.log(letter_string);
+        $(".text").contents().filter(function() {
+            return this.nodeType === 3;
+        })​.remove();​
+        $(".text").prepend(letter_string);
         $(".submit").on("click", submit);
         $(".submit").removeClass("disabled");
     })
@@ -75,4 +79,10 @@ function setTimer() {
     if (remainingTime <= 0) {
         remainingTime = intervalTime;
     }
+}
+
+function getCurrentString() {
+    $.get("/get_current_string", function(letter_string) {
+        $(".text").prepend(letter_string);
+    })
 }
