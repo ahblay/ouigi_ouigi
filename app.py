@@ -14,6 +14,8 @@ mysql.init_app(app)
 conn = mysql.connect()
 #cursor = conn.cursor()
 
+current_id = None
+
 
 def get_last_row(cursor):
     sql = "SELECT MAX(id) FROM letters"
@@ -62,11 +64,6 @@ def add_letter_to_db(letter, cursor):
 
     return value + letter
 
-cursor = conn.cursor()
-current_id = get_last_row(cursor)
-print(current_id)
-cursor.close()
-
 
 @app.route("/")
 def index():
@@ -76,6 +73,9 @@ def index():
 @app.route("/update_letter", methods=["POST"])
 def update_letter():
     cursor = conn.cursor()
+
+    global current_id
+    current_id = get_last_row(cursor)
 
     letter = request.form["letter"]
     sql = "SELECT " + letter + " FROM letters WHERE id = %s"
@@ -102,8 +102,11 @@ def get_time():
 def get_chosen_letter():
     cursor = conn.cursor()
 
+    global current_id
+    current_id = get_last_row(cursor)
+
     alphabet = "abcdefghijklmnopqrstuvwxyz"
-    sql = "SELECT a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z FROM letters WHERE id = %s"
+    sql = "SELECT a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z FROM letters WHERE id = '%s'"
     cursor.execute(sql, current_id)
     values = cursor.fetchone()
     result = "."

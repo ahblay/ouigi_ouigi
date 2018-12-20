@@ -53,12 +53,15 @@
     grid-column: 2 / 3;
     grid-row: 2 / 3;
     font-size: 20px;
+    display: inline-block;
+    word-break: break-all;
 }
 
 .blinking-cursor {
   font-weight: 100;
   font-size: 26px;
   color: black;
+  padding-left: 2px;
   -webkit-animation: 1s blink step-end infinite;
   -moz-animation: 1s blink step-end infinite;
   -ms-animation: 1s blink step-end infinite;

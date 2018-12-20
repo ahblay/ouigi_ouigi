@@ -59,10 +59,10 @@ function getTime() {
 function getChosenLetter() {
     $.get("/get_chosen_letter", function(letter_string) {
         console.log(letter_string);
-        $(".text").contents().filter(function() {
-            return this.nodeType === 3;
-        })​.remove();​
-        $(".text").prepend(letter_string);
+        $(".text").empty()
+        $(".text").append(letter_string);
+        let cursor = getCursorElement();
+        $(".text").append(cursor);
         $(".submit").on("click", submit);
         $(".submit").removeClass("disabled");
     })
@@ -83,6 +83,16 @@ function setTimer() {
 
 function getCurrentString() {
     $.get("/get_current_string", function(letter_string) {
-        $(".text").prepend(letter_string);
+        $(".text").empty()
+        $(".text").append(letter_string);
+        let cursor = getCursorElement();
+        $(".text").append(cursor);
     })
+}
+
+function getCursorElement() {
+    let span = document.createElement("span");
+    $(span).addClass("blinking-cursor");
+    $(span).text("|");
+    return span;
 }
