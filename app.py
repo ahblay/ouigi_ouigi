@@ -17,7 +17,15 @@ def get_last_row(cursor):
     sql = "SELECT MAX(id) FROM letters"
     cursor.execute(sql)
     value = cursor.fetchone()[0]
-    print(value, 20)
+    if not value:
+        sql = "INSERT INTO letters DEFAULT VALUES"
+        cursor.execute(sql)
+        conn.commit()
+
+        sql = "SELECT MAX(id) FROM letters"
+        cursor.execute(sql)
+        value = cursor.fetchone()[0]
+    print(value, 28)
     return value
 
 
@@ -30,12 +38,12 @@ def add_new_row(cursor):
 
 
 def get_letter_string(cursor):
-    print("GETTING LETTER STRING", 33)
+    print("GETTING LETTER STRING", 41)
     sql = "SELECT string FROM strings WHERE DATE(datetime) = CURRENT_DATE"
     cursor.execute(sql)
     value = cursor.fetchone()[0]
 
-    print(value, 38)
+    print(value, 46)
 
     return value
 
@@ -112,7 +120,7 @@ def get_chosen_letter():
 
     add_new_row(cursor)
     letter_string = add_letter_to_db(result, cursor)
-    print(letter_string, 115)
+    print(letter_string, 123)
 
     cursor.close()
 
