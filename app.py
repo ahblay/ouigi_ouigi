@@ -33,6 +33,8 @@ def get_letter_string(cursor):
     cursor.execute(sql)
     value = cursor.fetchone()
 
+    print(value)
+
     if value:
         value = value[0]
 
