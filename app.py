@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.secret_key = "shinedownisalittlebad"
 
 db = os.environ['DATABASE_URL']
+print(db)
 conn = psycopg2.connect("dbname=ouigi user=ouigi host=localhost password=ouigi_ouigi")
 
 current_id = None
