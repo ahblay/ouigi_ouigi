@@ -8,7 +8,7 @@ app.secret_key = "shinedownisalittlebad"
 
 db = os.environ['DATABASE_URL']
 conn = psycopg2.connect(db)
-print(conn)
+print(conn, 11)
 
 current_id = None
 
@@ -17,7 +17,7 @@ def get_last_row(cursor):
     sql = "SELECT MAX(id) FROM letters"
     cursor.execute(sql)
     value = cursor.fetchone()[0]
-    print(value)
+    print(value, 20)
     return value
 
 
@@ -30,12 +30,12 @@ def add_new_row(cursor):
 
 
 def get_letter_string(cursor):
-    print("GETTING LETTER STRING")
+    print("GETTING LETTER STRING", 33)
     sql = "SELECT string FROM strings WHERE DATE(datetime) = CURRENT_DATE"
     cursor.execute(sql)
     value = cursor.fetchone()[0]
 
-    print(value)
+    print(value, 38)
 
     return value
 
@@ -112,7 +112,7 @@ def get_chosen_letter():
 
     add_new_row(cursor)
     letter_string = add_letter_to_db(result, cursor)
-    print(letter_string)
+    print(letter_string, 115)
 
     cursor.close()
 
