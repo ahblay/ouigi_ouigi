@@ -105,11 +105,13 @@ def get_chosen_letter():
 
     global current_id
     current_id = get_last_row(cursor)
+    print(current_id, 108)
 
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     sql = "SELECT a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z FROM letters WHERE id = '%s'"
     cursor.execute(sql, current_id)
     values = cursor.fetchone()
+    print(values)
     result = "."
     max = 0
     counter = 0
