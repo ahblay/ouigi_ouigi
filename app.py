@@ -63,7 +63,7 @@ def add_letter_to_db(letter, cursor):
         value = ""
 
     sql = "UPDATE strings SET string = CONCAT(string, %s) WHERE DATE(datetime) = CURRENT_DATE"
-    cursor.execute(sql, letter)
+    cursor.execute(sql, [letter])
     conn.commit()
 
     return value + letter
@@ -83,12 +83,12 @@ def update_letter():
 
     letter = request.form["letter"]
     sql = "SELECT " + letter + " FROM letters WHERE id = %s"
-    cursor.execute(sql, current_id)
+    cursor.execute(sql, [current_id])
     value = cursor.fetchone()[0]
 
     sql = "UPDATE letters SET " + letter + " = %s WHERE id = %s"
     val = (value + 1, current_id)
-    cursor.execute(sql, val)
+    cursor.execute(sql, [val])
     conn.commit()
 
     cursor.close()
@@ -113,7 +113,7 @@ def get_chosen_letter():
 
     alphabet = "abcdefghijklmnopqrstuvwxyz"
     sql = "SELECT a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z FROM letters WHERE id = '%s'"
-    cursor.execute(sql, current_id)
+    cursor.execute(sql, [current_id])
     values = cursor.fetchone()
     print(values)
     result = "."
