@@ -17,6 +17,14 @@ def get_last_row(cursor):
     sql = "SELECT MAX(id) FROM letters"
     cursor.execute(sql)
     value = cursor.fetchone()
+    if not value[0]:
+        sql = "INSERT INTO letters DEFAULT VALUES"
+        cursor.execute(sql)
+        conn.commit()
+        
+        sql = "SELECT MAX(id) FROM letters"
+        cursor.execute(sql)
+        value = cursor.fetchone()
     print(value)
     return value
 
