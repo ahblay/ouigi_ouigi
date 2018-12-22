@@ -18,6 +18,7 @@ def get_last_row(cursor):
     print("GETTING LAST ROW")
     sql = "SELECT MAX(id) FROM letters"
     cursor.execute(sql)
+    print(cursor.fetchone())
     value = cursor.fetchone()[0]
     print(value, 22)
     if not value:
