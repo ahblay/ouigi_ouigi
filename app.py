@@ -17,6 +17,7 @@ def get_last_row(cursor):
     sql = "SELECT MAX(id) FROM letters"
     cursor.execute(sql)
     value = cursor.fetchone()
+    print(value)
     return value
 
 
@@ -81,8 +82,6 @@ def update_letter():
     conn.commit()
 
     cursor.close()
-
-
 
     return "success"
 
