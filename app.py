@@ -15,6 +15,7 @@ current_id = None
 
 
 def get_last_row(cursor):
+    print("GETTING LAST ROW")
     sql = "SELECT MAX(id) FROM letters"
     cursor.execute(sql)
     value = cursor.fetchone()[0]
@@ -101,6 +102,7 @@ def get_time():
 
 @app.route("/get_chosen_letter", methods=["GET"])
 def get_chosen_letter():
+    print("GETTING CHOSEN LETTER")
     cursor = conn.cursor()
 
     global current_id
