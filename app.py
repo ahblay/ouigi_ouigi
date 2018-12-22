@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify
-from flaskext.mysql import MySQL
 from datetime import datetime
 import psycopg2
 
@@ -7,17 +6,6 @@ app = Flask(__name__)
 app.secret_key = "shinedownisalittlebad"
 
 conn = psycopg2.connect("dbname=ouigi user=ouigi host=localhost password=ouigi_ouigi")
-
-'''
-mysql = MySQL()
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-app.config['MYSQL_DATABASE_USER'] = 'ouigi'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'ouigi_ouigi'
-app.config['MYSQL_DATABASE_DB'] = 'ouigi'
-mysql.init_app(app)
-conn = mysql.connect()
-#cursor = conn.cursor()
-'''
 
 current_id = None
 
