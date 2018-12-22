@@ -9,6 +9,7 @@ app.secret_key = "shinedownisalittlebad"
 db = os.environ['DATABASE_URL']
 conn = psycopg2.connect(db)
 print(conn, 11)
+print(conn.cursor())
 
 current_id = None
 
