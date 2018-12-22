@@ -16,7 +16,7 @@ current_id = None
 def get_last_row(cursor):
     sql = "SELECT MAX(id) FROM letters"
     cursor.execute(sql)
-    value = cursor.fetchone()
+    value = cursor.fetchone()[0]
     print(value)
     return value
 
@@ -33,12 +33,9 @@ def get_letter_string(cursor):
     print("GETTING LETTER STRING")
     sql = "SELECT string FROM strings WHERE DATE(datetime) = CURRENT_DATE"
     cursor.execute(sql)
-    value = cursor.fetchone()
+    value = cursor.fetchone()[0]
 
     print(value)
-
-    if value:
-        value = value[0]
 
     return value
 
