@@ -130,6 +130,7 @@ def get_chosen_letter():
 @app.route("/get_current_string")
 def get_current_string():
     cursor = conn.cursor()
+    print(cursor, 133)
 
     letter_string = get_letter_string(cursor)
 
