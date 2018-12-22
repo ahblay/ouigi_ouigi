@@ -1,10 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 from flaskext.mysql import MySQL
 from datetime import datetime
+import psycopg2
 
 app = Flask(__name__)
 app.secret_key = "shinedownisalittlebad"
 
+conn = psycopg2.connect("dbname=ouigi user=ouigi host=localhost password=ouigi_ouigi")
+
+'''
 mysql = MySQL()
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['MYSQL_DATABASE_USER'] = 'ouigi'
@@ -13,6 +17,7 @@ app.config['MYSQL_DATABASE_DB'] = 'ouigi'
 mysql.init_app(app)
 conn = mysql.connect()
 #cursor = conn.cursor()
+'''
 
 current_id = None
 
@@ -25,7 +30,7 @@ def get_last_row(cursor):
 
 
 def add_new_row(cursor):
-    sql = "INSERT INTO letters () VALUES ()"
+    sql = "INSERT INTO letters DEFAULT VALUES"
     cursor.execute(sql)
     conn.commit()
     global current_id
@@ -33,7 +38,7 @@ def add_new_row(cursor):
 
 
 def get_letter_string(cursor):
-    sql = "SELECT string FROM strings WHERE DATE(datetime) = CURDATE()"
+    sql = "SELECT string FROM strings WHERE DATE(datetime) = CURRENT_DATE"
     cursor.execute(sql)
     value = cursor.fetchone()
 
@@ -45,20 +50,15 @@ def get_letter_string(cursor):
 
 def add_letter_to_db(letter, cursor):
     value = get_letter_string(cursor)
-    print(value)
-    print(type(value))
 
     if not value:
-        print("in if")
-        sql = "INSERT INTO strings () VALUES ()"
+        sql = "INSERT INTO strings DEFAULT VALUES"
         cursor.execute(sql)
         conn.commit()
 
-        value = get_letter_string(cursor)
-        print(value)
-        print(type(value))
+        value = ""
 
-    sql = "UPDATE strings SET string = CONCAT(string, %s) WHERE DATE(datetime) = CURDATE()"
+    sql = "UPDATE strings SET string = CONCAT(string, %s) WHERE DATE(datetime) = CURRENT_DATE"
     cursor.execute(sql, letter)
     conn.commit()
 
@@ -88,6 +88,8 @@ def update_letter():
     conn.commit()
 
     cursor.close()
+
+
 
     return "success"
 
