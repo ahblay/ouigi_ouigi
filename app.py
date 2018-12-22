@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 import psycopg2
+import os
 
 app = Flask(__name__)
 app.secret_key = "shinedownisalittlebad"
 
+db = os.environ['DATABASE_URL']
 conn = psycopg2.connect("dbname=ouigi user=ouigi host=localhost password=ouigi_ouigi")
 
 current_id = None
