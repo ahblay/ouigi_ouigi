@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 import psycopg2
 import os
+import timeit
 
 app = Flask(__name__)
 app.secret_key = "shinedownisalittlebad"
@@ -131,3 +132,6 @@ def get_current_string():
 
     cursor.close()
     return jsonify(letter_string)
+
+time = timeit.timeit(get_current_string)
+print(time)
