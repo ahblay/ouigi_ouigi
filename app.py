@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 from datetime import datetime
 import psycopg2
 import os
-import timeit
+import time
 
 app = Flask(__name__)
 app.secret_key = "shinedownisalittlebad"
@@ -126,12 +126,12 @@ def get_chosen_letter():
 
 @app.route("/get_current_string")
 def get_current_string():
+    start = time.clock()
     cursor = conn.cursor()
 
     letter_string = get_letter_string(cursor)
 
     cursor.close()
+    print(time.clock() - start)
     return jsonify(letter_string)
 
-time = timeit.timeit(get_current_string)
-print(time)
